@@ -16,7 +16,10 @@ export default function CommentList({ comments, canComment, onAddComment }) {
       <ul>
         {comments.map((c) => (
           <li key={c.id}>
-            <span>{new Date(c.created_at).toLocaleString()}</span>
+            <strong>{c.username}</strong> {/* ⭐ NEW */}
+            <span style={{ marginLeft: "8px", opacity: 0.7 }}>
+              {new Date(c.created_at).toLocaleString()}
+            </span>
             <p>{c.content}</p>
           </li>
         ))}
