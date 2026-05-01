@@ -25,7 +25,6 @@ export default function PostPage({ session }) {
       .single();
 
     if (data) {
-      // Fetch real upvote count
       const { count } = await supabase
         .from("post_upvotes")
         .select("*", { count: "exact", head: true })
@@ -57,7 +56,6 @@ export default function PostPage({ session }) {
   const handleUpvote = async () => {
     if (!session) return;
 
-    // Check if user already upvoted
     const { data: existing } = await supabase
       .from("post_upvotes")
       .select("*")
@@ -70,13 +68,11 @@ export default function PostPage({ session }) {
       return;
     }
 
-    // Insert upvote
     await supabase.from("post_upvotes").insert({
       post_id: post.id,
       user_id: session.user.id,
     });
 
-    // Refresh count
     const { count } = await supabase
       .from("post_upvotes")
       .select("*", { count: "exact", head: true })
@@ -100,7 +96,7 @@ export default function PostPage({ session }) {
     if (data) {
       setPost(data);
       setEditing(false);
-      fetchPost(); // refresh upvote count too
+      fetchPost();
     }
   };
 
@@ -110,13 +106,22 @@ export default function PostPage({ session }) {
     navigate("/");
   };
 
+  // ⭐ UPDATED: Insert username into comments
   const handleAddComment = async (content) => {
     if (!session || !content.trim()) return;
+
+    // Fetch username from profiles
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("username")
+      .eq("id", session.user.id)
+      .single();
 
     await supabase.from("comments").insert({
       post_id: post.id,
       user_id: session.user.id,
       content: content.trim(),
+      username: profile.username, // ⭐ NEW
     });
 
     fetchComments();
@@ -136,13 +141,14 @@ export default function PostPage({ session }) {
           {post.is_dm ? "DM" : post.class}
         </span>
       </h2>
-        <p className="posted-by">Posted by: {post.username}</p>
+
+      <p className="posted-by">Posted by: {post.username}</p>
+
       <div className="meta">
         <span>{new Date(post.created_at).toLocaleString()}</span>
         <span>⬆ {post.upvotes}</span>
       </div>
 
-      {/* IMAGE FIXED */}
       {post.image_url && (
         <img
           src={post.image_url}
