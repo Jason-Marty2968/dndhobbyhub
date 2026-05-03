@@ -16,7 +16,11 @@ export default function PostPage({ session }) {
 
   const isOwner = session && post && post.user_id === session.user.id;
 
+<<<<<<< HEAD
   // Fetch post + upvote count
+=======
+  // Fetch post + real upvote count
+>>>>>>> cc0544ce1d41732c7d12daa695472a83f64f1532
   const fetchPost = async () => {
     const { data } = await supabase
       .from("posts")
@@ -52,7 +56,11 @@ export default function PostPage({ session }) {
     fetchComments();
   }, [id]);
 
+<<<<<<< HEAD
   // Upvote logic
+=======
+  // REAL upvote system
+>>>>>>> cc0544ce1d41732c7d12daa695472a83f64f1532
   const handleUpvote = async () => {
     if (!session) return;
 
@@ -106,7 +114,11 @@ export default function PostPage({ session }) {
     navigate("/");
   };
 
+<<<<<<< HEAD
   // ⭐ Insert comment WITH username
+=======
+  // ⭐ UPDATED: Insert username into comments
+>>>>>>> cc0544ce1d41732c7d12daa695472a83f64f1532
   const handleAddComment = async (content) => {
     if (!session || !content.trim()) return;
 
@@ -117,16 +129,23 @@ export default function PostPage({ session }) {
       .eq("id", session.user.id)
       .single();
 
+<<<<<<< HEAD
     if (!profile) {
       console.error("Profile not found for user:", session.user.id);
       return;
     }
 
+=======
+>>>>>>> cc0544ce1d41732c7d12daa695472a83f64f1532
     await supabase.from("comments").insert({
       post_id: post.id,
       user_id: session.user.id,
       content: content.trim(),
+<<<<<<< HEAD
       username: profile.username, // ⭐ REQUIRED
+=======
+      username: profile.username, // ⭐ NEW
+>>>>>>> cc0544ce1d41732c7d12daa695472a83f64f1532
     });
 
     fetchComments();

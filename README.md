@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # D&D HobbyHub
 
 A streamlined, community‑driven platform for Dungeons & Dragons players to share posts, track campaigns, and collaborate with other adventurers. Built for speed, clarity, and ease of use.
@@ -65,3 +66,6 @@ Live Site: https://dndhobbyhub.vercel.app/
 ```bash
 git clone <your-repo-url>
 cd dnd-hobbyhub
+=======
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify/netlify-statuskit)
+>>>>>>> cc0544ce1d41732c7d12daa695472a83f64f1532
